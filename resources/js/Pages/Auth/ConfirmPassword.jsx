@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { useEffect } from "react";
+import Button from "@/Components/Button";
+import Guest from "@/Layouts/Guest";
+import Input from "@/Components/Input";
+import Label from "@/Components/Label";
+import ValidationErrors from "@/Components/ValidationErrors";
+import { useForm } from "@inertiajs/inertia-react";
+import InputIconWrapper from "@/Components/InputIconWrapper";
+import { LockClosedIcon } from "@heroicons/react/outline";
 
-export default function ConfirmPassword() {
+export default () => {
     const { data, setData, post, processing, errors, reset } = useForm({
-        password: '',
+        password: "",
     });
 
     useEffect(() => {
         return () => {
-            reset('password');
+            reset("password");
         };
     }, []);
 
@@ -24,39 +26,52 @@ export default function ConfirmPassword() {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.confirm'));
+        post(route("password.confirm"));
     };
 
     return (
-        <GuestLayout>
-            <Head title="Confirm Password" />
-
-            <div className="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your password before continuing.
+        <Guest title="Confirm Password">
+            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                This is a secure area of the application. Please confirm your
+                password before continuing.
             </div>
 
+            <ValidationErrors errors={errors} />
+
             <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
+                <div className="grid gap-6">
+                    <div className="space-y-2">
+                        <Label forInput="password" value="Password" />
 
-                    <TextInput
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
+                        <InputIconWrapper
+                            icon={
+                                <LockClosedIcon
+                                    aria-hidden="true"
+                                    className="w-5 h-5"
+                                />
+                            }
+                        >
+                            <Input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={data.password}
+                                className="block w-full mt-1"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                                withIcon
+                            />
+                        </InputIconWrapper>
+                    </div>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ml-4" processing={processing}>
+                    <Button
+                        className="justify-center w-full"
+                        processing={processing}
+                    >
                         Confirm
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </form>
-        </GuestLayout>
+        </Guest>
     );
-}
+};
