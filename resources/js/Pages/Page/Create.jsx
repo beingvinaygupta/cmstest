@@ -21,11 +21,11 @@ export default function CreatePage(props) {
                         <CKEditor
                             editor={ClassicEditor}
                             config={{
-                                // ckfinder: {
-                                //     // Upload the images to the server using the CKFinder QuickUpload command.
-                                //     uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                                //     openerMethod: 'popup'
-                                // }
+                                ckfinder: {
+                                    // Upload the images to the server using the CKFinder QuickUpload command.
+                                    uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                                    openerMethod: 'popup'
+                                }
                             }}
                             data="<p>Hello from CKEditor 5!</p>"
                             onReady={editor => {
